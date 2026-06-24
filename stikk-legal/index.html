@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Legal Center — Stikk</title>
+  <style>
+    :root {
+      --bg: #0D0D12;
+      --card: #16161E;
+      --border: #2A2A35;
+      --text: #E4E4ED;
+      --muted: #9494A8;
+      --accent: #7B5AFF;
+      --accent-soft: rgba(123,90,255,0.12);
+      --danger: #FF4E6A;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+    .container { max-width: 780px; margin: 0 auto; padding: 48px 24px 80px; }
+    .badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: var(--accent-soft); color: var(--accent);
+      padding: 6px 14px; border-radius: 20px;
+      font-size: 13px; font-weight: 600; margin-bottom: 12px;
+    }
+    h1 { font-size: 32px; font-weight: 800; margin-bottom: 8px; }
+    p { font-size: 15px; color: var(--muted); margin-bottom: 24px; }
+    
+    .card-grid {
+      display: grid;
+      gap: 16px;
+      margin-top: 32px;
+    }
+    
+    .doc-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+      text-decoration: none;
+      display: flex;
+      flex-direction: column;
+      transition: all 0.2s;
+    }
+    
+    .doc-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+    }
+    
+    .doc-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+    
+    .doc-desc {
+      font-size: 14px;
+      color: var(--muted);
+      margin: 0;
+    }
+
+    .lang-toggle {
+      position: fixed; top: 16px; right: 16px; z-index: 100;
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 24px; padding: 4px; display: flex; gap: 2px;
+    }
+    .lang-toggle button {
+      background: none; border: none; color: var(--muted);
+      padding: 8px 16px; border-radius: 20px; cursor: pointer;
+      font-size: 13px; font-weight: 600; transition: all .2s;
+    }
+    .lang-toggle button.active { background: var(--accent); color: #fff; }
+    .es { display: none; }
+    body.lang-es .en { display: none; }
+    body.lang-es .es { display: revert; }
+    
+    @media (max-width: 600px) {
+      .container { padding: 32px 16px 60px; }
+      h1 { font-size: 26px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="lang-toggle">
+  <button class="active" id="btn-en" onclick="setLang('en')">EN</button>
+  <button id="btn-es" onclick="setLang('es')">ES</button>
+</div>
+
+<div class="container">
+  <div class="badge">⚖️ <span class="en">Legal Center</span><span class="es">Centro Legal</span></div>
+
+  <!-- ENGLISH -->
+  <div class="en">
+    <h1>Stikk Legal Center</h1>
+    <p>Please review our legal documentation and policies below. All documents are available in English and Spanish.</p>
+
+    <div class="card-grid">
+      <a href="privacy-policy.html" class="doc-card">
+        <div class="doc-title">Privacy Policy</div>
+        <p class="doc-desc">Learn how we collect, use, and protect your personal data while you use Stikk.</p>
+      </a>
+      
+      <a href="terms-of-service.html" class="doc-card">
+        <div class="doc-title">Terms of Service</div>
+        <p class="doc-desc">Read the rules and guidelines for using the Stikk app and its community features.</p>
+      </a>
+      
+      <a href="data-control.html" class="doc-card">
+        <div class="doc-title">Data Control</div>
+        <p class="doc-desc">Instructions on how to manage, export, or delete your account data.</p>
+      </a>
+    </div>
+  </div>
+
+  <!-- ESPAÑOL -->
+  <div class="es">
+    <h1>Centro Legal Stikk</h1>
+    <p>Por favor, revisa nuestra documentación y políticas legales a continuación. Todos los documentos están disponibles en inglés y español.</p>
+
+    <div class="card-grid">
+      <a href="privacy-policy.html" class="doc-card">
+        <div class="doc-title">Política de Privacidad</div>
+        <p class="doc-desc">Aprende cómo recopilamos, usamos y protegemos tus datos personales mientras usas Stikk.</p>
+      </a>
+      
+      <a href="terms-of-service.html" class="doc-card">
+        <div class="doc-title">Términos de Servicio</div>
+        <p class="doc-desc">Lee las reglas y pautas para usar la app Stikk y sus funciones de comunidad.</p>
+      </a>
+      
+      <a href="data-control.html" class="doc-card">
+        <div class="doc-title">Control de Datos</div>
+        <p class="doc-desc">Instrucciones sobre cómo gestionar, exportar o eliminar los datos de tu cuenta.</p>
+      </a>
+    </div>
+  </div>
+
+</div>
+
+<script>
+function setLang(lang) {
+  document.body.className = lang === 'es' ? 'lang-es' : '';
+  document.getElementById('btn-en').className = lang === 'en' ? 'active' : '';
+  document.getElementById('btn-es').className = lang === 'es' ? 'active' : '';
+  localStorage.setItem('stikk-lang', lang);
+}
+// Auto-detect
+const saved = localStorage.getItem('stikk-lang');
+if (saved) setLang(saved);
+else if (navigator.language.startsWith('es')) setLang('es');
+</script>
+</body>
+</html>
